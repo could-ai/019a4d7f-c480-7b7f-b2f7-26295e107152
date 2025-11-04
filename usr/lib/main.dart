@@ -227,7 +227,7 @@ class _HomePageState extends State<HomePage> {
 
   void exportJSON() {
     final jsonStr = jsonEncode(data);
-    Share.share(jsonStr, subject: 'FlashCard Export', filename: 'flashapp_export.json');
+    Share.share(jsonStr, subject: 'FlashCard Export');
   }
 
   @override
@@ -299,7 +299,7 @@ class _HomePageState extends State<HomePage> {
           Text('Selected: $selectedCategory${selectedCategory == 'Nursing' ? ' / $selectedNursingSub' : ''}', style: TextStyle(color: Colors.grey)),
           const SizedBox(height: 16),
           const Text('Quick Actions', style: TextStyle(fontWeight: FontWeight.bold)),
-          ElevatedButton(onPressed: () => setState(() => {qText = ''; aText = ''; editingIdx = null;}), child: const Text('New Question')),
+          ElevatedButton(onPressed: () => setState(() { qText = ''; aText = ''; editingIdx = null; }), child: const Text('New Question')),
           ElevatedButton(onPressed: prepareExam, child: const Text('Start Exam')),
           ElevatedButton(onPressed: exportJSON, child: const Text('Export All')),
           ElevatedButton(onPressed: () => FlutterClipboard.paste().then((raw) => importJSON(raw)), child: const Text('Import JSON')),
@@ -341,7 +341,7 @@ class _HomePageState extends State<HomePage> {
             Row(children: [
               ElevatedButton(onPressed: handleAddOrUpdate, child: Text(editingIdx != null ? 'আপডেট করুন' : 'যোগ করুন')),
               const SizedBox(width: 8),
-              OutlinedButton(onPressed: () => setState(() => {qText = ''; aText = ''; editingIdx = null; editingSub = null;}), child: const Text('রিসেট')),
+              OutlinedButton(onPressed: () => setState(() { qText = ''; aText = ''; editingIdx = null; editingSub = null; }), child: const Text('রিসেট')),
               const SizedBox(width: 8),
               OutlinedButton(onPressed: exportJSON, child: const Text('Export JSON')),
               const SizedBox(width: 8),
@@ -365,7 +365,7 @@ class _HomePageState extends State<HomePage> {
               const Spacer(),
               const Text('Shuffle on Exam start'),
               Checkbox(value: shuffleOnStart, onChanged: (v) => setState(() => shuffleOnStart = v!)),
-              OutlinedButton(onPressed: () => showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text('সব মুছে ফেলবেন?'), actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('না')), TextButton(onPressed: () => {writeCategoryArray(selectedCategory == 'Nursing' ? 'Nursing' : selectedCategory, [], selectedCategory == 'Nursing' ? selectedNursingSub : null); Navigator.pop(ctx);}, child: const Text('হ্যাঁ'))])), child: const Text('Clear', style: TextStyle(fontSize: 12))),
+              OutlinedButton(onPressed: () => showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text('সব মুছে ফেলবেন?'), actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('না')), TextButton(onPressed: () { writeCategoryArray(selectedCategory == 'Nursing' ? 'Nursing' : selectedCategory, [], selectedCategory == 'Nursing' ? selectedNursingSub : null); Navigator.pop(ctx); }, child: const Text('হ্যাঁ'))])), child: const Text('Clear', style: TextStyle(fontSize: 12))),
             ]),
             if (arr.isEmpty) const Text('কোনো প্রশ্ন নেই — উপরে ফরম ভরে যোগ করুন।') else
               ...arr.map((it) => Card(
@@ -423,10 +423,10 @@ class _HomePageState extends State<HomePage> {
             ),
             Row(children: [
               ElevatedButton(onPressed: () => setState(() => showAnswer = !showAnswer), child: Text(showAnswer ? 'Hide Answer' : 'Show Answer')),
-              IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => setState(() => {examIdx = max(0, examIdx - 1); showAnswer = false;})),
-              IconButton(icon: const Icon(Icons.arrow_forward), onPressed: () => setState(() => {examIdx = min(examList.length - 1, examIdx + 1); showAnswer = false;})),
-              IconButton(icon: const Icon(Icons.refresh), onPressed: () => setState(() => {examIdx = 0; showAnswer = false;})),
-              IconButton(icon: const Icon(Icons.shuffle), onPressed: () => setState(() => {examList.shuffle(Random()); examIdx = 0; showAnswer = false;})),
+              IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => setState(() { examIdx = max(0, examIdx - 1); showAnswer = false; })),
+              IconButton(icon: const Icon(Icons.arrow_forward), onPressed: () => setState(() { examIdx = min(examList.length - 1, examIdx + 1); showAnswer = false; })),
+              IconButton(icon: const Icon(Icons.refresh), onPressed: () => setState(() { examIdx = 0; showAnswer = false; })),
+              IconButton(icon: const Icon(Icons.shuffle), onPressed: () => setState(() { examList.shuffle(Random()); examIdx = 0; showAnswer = false; })),
             ]),
           ],
         ),
